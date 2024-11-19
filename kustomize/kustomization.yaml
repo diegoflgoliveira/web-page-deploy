@@ -4,4 +4,4 @@ namePrefix: appconversao-
 resources:
   - deployment.yaml
 commonLabels:
-  environment: developent
+  environment: development
