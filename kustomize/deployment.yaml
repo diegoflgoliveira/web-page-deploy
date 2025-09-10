@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: conversao
 spec:
-  replicas: 3
+  replicas: 6
   selector:
     matchLabels:
-      app: nginx
+      app: conversao
   template:
     metadata:
       labels:
-        app: nginx
+        app: conversao
     spec:
       containers:
-      - name: nginx
-        image: nginx
+      - name: conversao
+        image: fabricioveronez/conversao-temperatura:v1
         ports:
-        - containerPort: 80
+        - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: conversao
 spec:
   selector:
-    app: nginx
+    app: conversao
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 8080
   type: LoadBalancer
