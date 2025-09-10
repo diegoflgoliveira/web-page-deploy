@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: webpage
 spec:
-  replicas: 40
   selector:
     matchLabels:
       app: webpage
@@ -17,13 +16,6 @@ spec:
         image: fabricioveronez/pagina-exemplo:blue
         ports:
         - containerPort: 80
-        resources
-          requests:
-            cpu: 300m
-            memory: 256Mi
-          limits:
-            cpu: 300m
-            memory: 256Mi
 ---
 apiVersion: v1
 kind: Service
