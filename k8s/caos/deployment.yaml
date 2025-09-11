@@ -1,57 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web
+  name: conversao
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      app: web
+      app: conversao
   template:
     metadata:
       labels:
-        app: web
+        app: conversao
     spec:
       containers:
-      - name: web
-        image: fabricioveronez/simulador-do-caos
+      - name: conversao
+        image: fabricioveronez/conversao-temperatura:v1
         ports:
-        - containerPort: 3000
-        resources:
-          requests:
-            cpu: 300m
-            memory: 256Mi
-          limits:
-            cpu: 300m
-            memory: 256Mi
+        - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: web
+  name: conversao
 spec:
   selector:
-    app: web
+    app: conversao
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 8080
   type: LoadBalancer
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: web
-spec:
-  maxReplicas: 10
-  minReplicas: 2
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: web
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
